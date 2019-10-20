@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { withRouter, Route, Switch } from "react-router-dom";
+import NotFound from "components/Errors/NotFound";
+import ErrorBoundary from "components/Errors/ErrorBoundary";
+import EmptyLayout from "./components/Layouts/EmptyLayout";
+import { PublicRoute, PrivateRoute } from "./RouteGuards/";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <ErrorBoundary>
+          <Switch key={this.props.location.key}>
+            {/*
+          * EXAMPLE ROUTES
+          * <PublicRoute
+                exact
+                path={['/login', '/forgot', '/password-reset']}
+                layout={EmptyLayout}
+                component={props => <TuComponenteAuth {...props} />}
+              />
+
+              <PrivateRoute
+                exact
+                path="/dashboard"
+                layout={TuLayout}
+                component={WaitingComponent(DashboardPage)}
+                allowedRoles={['superadmin', 'admin']}
+              />
+               *
+              */}
+
+            <Route component={NotFound} />
+          </Switch>
+        </ErrorBoundary>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withRouter(App);
